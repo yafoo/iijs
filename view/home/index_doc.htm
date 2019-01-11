@@ -1,5 +1,18 @@
 <%-include('common_head.htm')%>
 <div class="wrap">
-    <div style="font-size:50px;">doc</div>
+    <div style="font-size:50px;line-height:150px;">doc文档待完善</div>
+    <p>首页由README.md文档解析生成，控制器代码：<br><br>
+        const readme = this.view.load('.././README.md').markdown().html();<br>
+        this.view.assign('title', 'iijs - 一个简单轻量级nodejs MVC框架');<br>
+        this.view.assign('readme', readme);<br>
+        this.view.fetch();<br><br><br>
+    </p>
+    <p>本页由模板解析生成，控制器代码：<br><br>
+        this.view.assign('title', 'iijs文档手册 - iijs');<br>
+        this.view.fetch();<br><br><br>
+    </p>
+    <p>hello页为内容直接输出，控制器代码：<br><br>
+        this.view.display(`&lt;div style=&quot;font-size:50px;&quot;&gt;hello iijs, hello world !&lt;/div&gt;`);
+    </p>
 </div>
 <%-include('common_foot.htm')%>

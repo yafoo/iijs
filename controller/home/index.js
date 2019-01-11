@@ -15,7 +15,6 @@ class index extends Controller {
     }
 
     async hello() {
-        this.view.assign('title', 'hello world ! - iijs');
         this.view.display(`<div style="font-size:50px;">hello iijs, hello world !</div>`);
     }
 

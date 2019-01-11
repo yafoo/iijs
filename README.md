@@ -11,7 +11,7 @@ A simple lightweight nodejs+koa2 mvc framework
 
 1. [iijs官网](https://js.i-i.me/ "iijs官网")
 2. [iijs手册](https://js.i-i.me/doc "iijs手册")
-3. [iijs展示](https://js.i-i.me/hello "iijs展示")
+3. [hello world](https://js.i-i.me/hello "hello world")
 
 #### 其他
 
