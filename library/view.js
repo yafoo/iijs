@@ -1,6 +1,6 @@
 const path = require('path');
 const fs = require('fs');
-
+const engine = {};
 class View {
     constructor(ctx, next) {
         this.ctx = ctx;
@@ -8,8 +8,6 @@ class View {
         this._file = '';
         this._data = {};
         this._html = 'hello iijs !';
-        this._ejs = null;
-        this._md = null;
     }
 
     //获取模版内容
@@ -46,7 +44,7 @@ class View {
             this._html = content;
             this._file = '';
         }
-        this._html = this.ejs.render(this._html, this._data, {filename: this._file});
+        this._html = this.ejs.render(this._html, this._data, {filename: this._file, cache: true});
         return this;
     }
 
@@ -95,14 +93,14 @@ class View {
 
     //ejs引擎
     get ejs(){
-        if(!this._ejs) this._ejs = require('ejs');
-        return this._ejs;
+        if(!engine['ejs']) engine['ejs'] = require('ejs');
+        return engine['ejs'];
     }
 
     //md引擎
     get md(){
-        if(!this._md) this._md = require('markdown').markdown;
-        return this._md;
+        if(!engine['md']) engine['md'] = require('markdown').markdown;
+        return engine['md'];
     }
 }
 

@@ -4,7 +4,7 @@ const db = require('../../config/db');
 class index extends Controller {
     async index() {
         const readme = this.view.load('.././README.md').markdown().html();
-        this.view.assign('title', 'iijs - 一个简单轻量级nodejs MVC框架');
+        this.view.assign('title', 'iijs - 一个简单轻量级Node.js MVC框架');
         this.view.assign('readme', readme);
         this.view.fetch();
     }
