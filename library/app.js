@@ -2,7 +2,14 @@ const Koa = require('koa');
 const path = require('path');
 const koaBody = require('koa-body');
 const router = require('./router');
+const root = require('./loader');
 const app = new Koa();
+
+//root
+app.use(async (ctx, next) => {
+    ctx.root = root(ctx);
+    await next();
+});
 
 //log
 app.use(async (ctx, next) => {
