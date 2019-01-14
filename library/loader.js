@@ -1,30 +1,43 @@
 const isClass = require('is-class');
-const path = Symbol('load->path');
 
-function loader(ctx, obj) {
-    obj = obj || {};
-    return new Proxy(obj, {
-        get (target, property) {
-            //if(typeof property === 'symbol') return; ??
-            if(isClass(target)) return new target(ctx)[property];
+function load(dir, ...args) {
+    const loader = {};
+    const cache = {};
+    const path = Symbol('load#path');
+    loader[path] = (dir && dir.charAt(dir.length-1) == '/' ? dir : dir + '/') || require('path').pathname(module.parent.filename) + '/';
+    return creatLoader(loader);
 
-            if (!(property in target)) {
-                if (!target[path]) target[path] = obj.path || '../';
-                try {
-                    const child = require(target[path] + property + '.js');
-                    isClass(child) ? target[property] = require('./loader')(ctx, child) : child;
-                } catch(e) {
-                    target[property] = require('./loader')(ctx);
+    function creatLoader(obj={}) {
+        return new Proxy(obj, {
+            get (target, property) {
+                if (isClass(target)) {
+                    if (!cache[target[path]]) cache[target[path]] = new target(...args);
+                    if(property == 'instance') return cache[target[path]];
+                    return cache[target[path]][property];
+                }
+                if (!(property in target)) {
+                    try {
+                        const child = require(target[path] + property + '.js');
+                        isClass(child) ? target[property] = creatLoader(child) : child;
+                    } catch(e) {
+                        target[property] = creatLoader();
+                    }
                     target[property][path] = target[path] + property + '/';
                 }
+                return target[property];
+            },
+            construct (target, args) {
+                return new target(...args);
             }
-            return target[property];
-        },
-        //??
-        construct (target, args, newTarget) {
-            return new target(...args);
-        }
-    });
+        });
+    }
 }
 
-module.exports = loader;
+function middle(dir, name='load') {
+    return async (ctx, next) => {
+        ctx[name] = load(dir, ctx, next);
+        await next();
+    }
+}
+
+module.exports = {load, middle};
