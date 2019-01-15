@@ -5,6 +5,7 @@ class View {
     constructor(ctx, next) {
         this.ctx = ctx;
         this.next = next;
+        this.config = ctx.loader.config.app;
         this._file = '';
         this._data = {};
         this._html = 'hello iijs !';
@@ -13,27 +14,34 @@ class View {
     //获取模版内容
     load(template){
         let view_file = '';
-        template = template || this.ctx.state.action;
-        template = template.split('/');
-        
-        for(let i=0; i<template.length; i++){
-            if(i == template.length-1 && !~template[i].indexOf('.')){
-                template[i] += '.' + this.ctx.state.config.view_suffix;
-                view_file += this.ctx.state.config.view_depr + template[i];
-            }else{
-                view_file += '/' + template[i];
+        template = template || this.ctx._action;
+        if(path.extname(template)){
+            view_file = template;
+        }else{
+            temp = template.trim('/').split('/');
+            switch(temp.length){
+                case 1:
+                    view_file = this.ctx._app + '/view/' + this.ctx._controller + this.config.view_depr + temp[0];
+                    break;
+                case 2:
+                    view_file = this.ctx._app + '/view/' + temp[0] + this.config.view_depr + temp[1];
+                    break;
+                case 3:
+                    view_file = temp[0] + '/view/' + temp[1] + this.config.view_depr + temp[2];
+                    break;
+                default:
+                    view_file = template;
             }
+            view_file += this.config.view_suffix;
         }
-        if(template.length == 1) view_file = this.ctx.state.controller + view_file;
-        if(template.length < 2 && this.ctx.state.config.app_multi_module) view_file = this.ctx.state.module + '/' + view_file;
+        template = template.split('/');
 
-        const view_path = path.join(__dirname, '../view', view_file);
-        if(this.ctx.state.config.app_debug && !fs.existsSync(view_path)){
-            console.log(view_path, view_file);
-            return this.display(`模块文件:${view_path}不存在！`);
+        view_file = path.join(__dirname, '../', view_file);
+        if(this.config.app_debug && !fs.existsSync(view_file)){
+            return this.display(`模板文件:${view_file}不存在！`);
         }
         const _BOM = /^\uFEFF/;
-        this._html = fs.readFileSync(view_path).toString().replace(_BOM, '');
+        this._html = fs.readFileSync(view_file).toString().replace(_BOM, '');
         this._file = view_path;
         return this;
     }
@@ -78,7 +86,7 @@ class View {
     //获取或设置模版数据
     data(obj_data){
         if(!obj_data) return this._data;
-        if(typeof obj_data != 'object' && this.ctx.state.config.app_debug){
+        if(typeof obj_data != 'object' && this.config.app_debug){
             this.display(`${obj_data}必需为json对象！`);
         }else{
             this._data = obj_data;

@@ -1,43 +1,64 @@
+const fs = require('fs');
+const pt = require('path');
 const isClass = require('is-class');
+const isFile = (path) => {return fs.existsSync(path) && fs.statSync(path).isFile();}
+const isDir = (path) => {return fs.existsSync(path) && fs.statSync(path).isDirectory();}
+
+const dirs = {};
 
 function load(dir, ...args) {
-    const loader = {};
-    const cache = {};
-    const path = Symbol('load#path');
-    loader[path] = (dir && dir.charAt(dir.length-1) == '/' ? dir : dir + '/') || require('path').pathname(module.parent.filename) + '/';
-    return creatLoader(loader);
+    const box = new Map();
+    const root = {};
+    box.set(root, {
+        path: pt.join(pt.dirname(module.parent.filename), dir || '/', './'),
+        class: false
+    });
+    return creatLoader(root);
 
-    function creatLoader(obj={}) {
+    function creatLoader(obj) {
         return new Proxy(obj, {
-            get (target, property) {
-                if (isClass(target)) {
-                    if (!cache[target[path]]) cache[target[path]] = new target(...args);
-                    if(property == 'instance') return cache[target[path]];
-                    return cache[target[path]][property];
+            get: (target, property) => {
+                if (property in target) return target[property];
+                if(typeof property == 'symbol') return;
+                const box_tgt = box.get(target);
+                if (box_tgt.class) {
+                    if (!box_tgt.instance) box_tgt.instance = new target(...args);
+                    return property == 'instance' ? box_tgt.instance : box_tgt.instance[property];
                 }
-                if (!(property in target)) {
-                    try {
-                        const child = require(target[path] + property + '.js');
-                        isClass(child) ? target[property] = creatLoader(child) : child;
-                    } catch(e) {
-                        target[property] = creatLoader();
-                    }
-                    target[property][path] = target[path] + property + '/';
+                let child = {};
+                const child_path = box_tgt.path + property + '/';
+                const child_file = box_tgt.path + property + '.js';
+                if (!dirs[child_path]) {
+                    if (isFile(child_file)) dirs[child_path] = 'file';
+                    else if (isDir(child_path)) dirs[child_path] = 'dir';
+                    else dirs[child_path] = 'none';
                 }
-                return target[property];
+                if (dirs[child_path] == 'file') {
+                    child = require(child_file);
+                } else if (dirs[child_path] != 'dir') {
+                    return undefined;
+                }
+                box.set(child, {
+                    path: child_path,
+                    class: isClass(child)
+                });
+                return creatLoader(child);
             },
-            construct (target, args) {
+            construct: (target, args) => {
                 return new target(...args);
+            },
+            apply: (target, ctx, args) => {
+                return Reflect.apply(...arguments);
             }
         });
     }
 }
 
-function middle(dir, name='load') {
+function middle(dir, name='loader') {
     return async (ctx, next) => {
         ctx[name] = load(dir, ctx, next);
         await next();
     }
 }
 
-module.exports = {load, middle};
+module.exports = {load, middle, isClass, isFile, isDir};

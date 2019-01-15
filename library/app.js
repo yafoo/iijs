@@ -5,9 +5,6 @@ const router = require('./router');
 const loader = require('./loader').middle;
 const app = new Koa();
 
-//loader
-app.use(loader(__dirname + '/../', 'root'));
-
 //log
 app.use(async (ctx, next) => {
     const start = new Date();
@@ -21,6 +18,9 @@ app.use(require('koa-static')(path.join(__dirname, '../public')));
 
 //koa-body
 app.use(koaBody());
+
+//loader
+app.use(loader('../'));
 
 //router
 app.use(router.routes());

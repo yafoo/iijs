@@ -1,5 +1,4 @@
 const Controller = require('../../library/controller');
-const db = require('../../config/db');
 
 class index extends Controller {
     async index() {
@@ -7,6 +6,10 @@ class index extends Controller {
         this.view.assign('title', 'iijs - 一个简单轻量级Node.js MVC框架');
         this.view.assign('readme', readme);
         this.view.fetch();
+    }
+
+    async test() {
+        this.view.display(`<div style="font-size:50px;">test !</div>`);
     }
 
     async doc() {
@@ -19,6 +22,7 @@ class index extends Controller {
     }
 
     async mysql() {
+        const db = this.ctx.loader.config.db;
         await db('select * from link').then(function(data){
             this.view.display(data);
         }).catch(function(err){

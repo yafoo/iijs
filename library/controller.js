@@ -1,4 +1,4 @@
-class controller {
+class Controller {
     constructor(ctx, next) {
         this.ctx = ctx;
         this.next = next;
@@ -12,4 +12,4 @@ class controller {
     }
 }
 
-module.exports = controller;
+module.exports = Controller;
