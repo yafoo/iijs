@@ -6,7 +6,7 @@ const isDir = (path) => {return fs.existsSync(path) && fs.statSync(path).isDirec
 
 const dirs = {};
 
-function load(dir, ...args) {
+function loader(dir, ...args) {
     const box = new Map();
     const root = {};
     box.set(root, {
@@ -17,17 +17,17 @@ function load(dir, ...args) {
 
     function creatLoader(obj) {
         return new Proxy(obj, {
-            get: (target, property) => {
-                if (property in target) return target[property];
-                if(typeof property == 'symbol') return;
+            get: (target, prop) => {
+                if (prop in target) return target[prop];
+                if(typeof prop == 'symbol') return;
                 const box_tgt = box.get(target);
                 if (box_tgt.class) {
                     if (!box_tgt.instance) box_tgt.instance = new target(...args);
-                    return property == 'instance' ? box_tgt.instance : box_tgt.instance[property];
+                    return prop == 'instance' ? box_tgt.instance : box_tgt.instance[prop];
                 }
                 let child = {};
-                const child_path = box_tgt.path + property + '/';
-                const child_file = box_tgt.path + property + '.js';
+                const child_path = box_tgt.path + prop + '/';
+                const child_file = box_tgt.path + prop + '.js';
                 if (!dirs[child_path]) {
                     if (isFile(child_file)) dirs[child_path] = 'file';
                     else if (isDir(child_path)) dirs[child_path] = 'dir';
@@ -43,12 +43,6 @@ function load(dir, ...args) {
                     class: isClass(child)
                 });
                 return creatLoader(child);
-            },
-            construct: (target, args) => {
-                return new target(...args);
-            },
-            apply: (target, ctx, args) => {
-                return Reflect.apply(...arguments);
             }
         });
     }
@@ -56,9 +50,9 @@ function load(dir, ...args) {
 
 function middle(dir, name='loader') {
     return async (ctx, next) => {
-        ctx[name] = load(dir, ctx, next);
+        ctx[name] = loader(dir, ctx, next);
         await next();
     }
 }
 
-module.exports = {load, middle, isClass, isFile, isDir};
+module.exports = {loader, middle, isClass, isFile, isDir};

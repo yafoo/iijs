@@ -1,7 +1,9 @@
-<%- include('common_head.htm') %>
-<div class="wrap">
-    <div class="markdown">
-        <%- readme %>
-    </div>
+{{extend './layout.htm'}}
+{{block 'title'}}
+    <title>{{title}}</title>
+{{/block}}
+{{block 'content'}}
+<div class="c">
+    {{@readme}}
 </div>
-<%- include('common_foot.htm') %>
+{{/block}}

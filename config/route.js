@@ -1,6 +1,6 @@
 route = [
-    {url: '/doc', path: 'home/index/doc'},
-    {url: '/hello', path: 'home/index/hello'}
+    {url: '/doc', path: 'app/index/doc'},
+    {url: '/hello', path: 'app/index/hello'}
 ];
 
 module.exports = route;
