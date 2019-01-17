@@ -6,7 +6,7 @@ class index extends Controller {
         readme = this.view.md.toHTML(readme);
         readme = readme.replace('</p>', '</p><hr>');
         readme = readme.replace(/<p><code>/g, '<pre><code>');
-        readme = readme.replace(/<\/code><\/p>/g, '</code></pre>');
+        readme = readme.replace(/<\/code><\/p>/g, '\n</code></pre>');
         this.assign('title', 'iijs - 一个简单轻量级Node.js MVC框架');
         this.assign('readme', readme);
         await this.fetch();

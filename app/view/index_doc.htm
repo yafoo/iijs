@@ -6,7 +6,7 @@
 <div class="c">
     <h1>iijs文档(待完善)</h1>
     <hr>
-    <h4>本站演示站首页由解析README.md文档后配合模板生成，控制器代码：</h4>
+    <h4>本演示站首页由解析README.md文档后，配合模板生成，控制器代码：</h4>
     <pre><code>
     async index() {
         let readme = await this.view.load(&#x27;README.md&#x27;);
@@ -19,7 +19,7 @@
         await this.fetch();
     }
     </code></pre>
-    <h4>本文档页由模板解析生成，控制器代码：</h4>
+    <h4>本文档页由解析模板解析生成，控制器代码：</h4>
     <pre><code>
     async doc() {
         this.assign(&#x27;title&#x27;, &#x27;iijs文档手册 - iijs&#x27;);
