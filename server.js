@@ -1,4 +1,4 @@
-const app = require('./library/app');
+const app = require('./lib/app');
 
 //server
 app.listen(3000, '0.0.0.0', function(err){

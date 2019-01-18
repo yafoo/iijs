@@ -1,4 +1,4 @@
-const Controller = require('../../library/controller');
+const Controller = require('../../lib/controller');
 
 class index extends Controller {
     async index() {
