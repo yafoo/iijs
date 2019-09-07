@@ -1,5 +1,8 @@
-const app = require('./lib/app');
-const controller = require('./lib/controller');
-const helper = require('./lib/helper');
-
-module.exports = {app, controller, helper};
+module.exports = new Proxy({}, {
+    get: (target, prop) => {
+        if(prop in target || typeof prop == 'symbol'){
+            return target[prop];
+        }
+        return require('./lib/' + prop.toLowerCase());
+    }
+});
