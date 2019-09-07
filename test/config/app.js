@@ -1,5 +1,5 @@
-const app = {
-    app_debug: false,
+let app = {
+    app_debug: true,
     app_multi: true, //是否开启多应用
 
     default_app: 'app', //默认应用
