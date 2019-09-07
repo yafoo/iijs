@@ -17,33 +17,31 @@ A simple and lightweight MVC framework built on nodejs+koa2
 ### 应用结构
 
 ```
-|—— app  //应用目录 （非必需，可更改）
-| |—— controller  //控制器目录 （非必需，可更改）
-| | |—— index.js //控制器
-| |—— view  //模板目录 （非必需，不可更改）
-| | |—— index  //index控制器模板目录 （非必需，可更改）
-| | | |—— index.htm //模板
-| |—— model  //模型目录 （非必需，可更改）
-| |—— logic  //逻辑目录 （非必需，可更改）
-| |—— ****  //其他目录 （非必需，可更改）
-
-|—— config  //配置目录 （非必需，不可更改）
-| |—— app.js  //APP配置 （非必需，不可更改）
-| |—— route.js  //路由配置 （非必需，不可更改）
-| |—— ****  //其他配置 （非必需，可更改）
-
-|—— node_modules  //nodejs模块目录
-
-|—— public  //静态访问目录 （非必需，可更改）
-| |—— static  //css image文件目录 （非必需，可更改）
-
-|—— server.js  //应用入口文件 （必需，可更改）
-|—— package.json  //npm package.json
+├── app             //应用目录 （非必需，可更改）
+|  ├── Controller   //控制器目录 （非必需，可更改）
+|  |  └── index.js  //控制器
+|  ├── view         //模板目录 （非必需，不可更改）
+|  |  └── index     //index控制器模板目录 （非必需，可更改）
+|  |     └── index.htm //模板
+|  ├── model        //模型目录 （非必需，可更改）
+|  ├── logic        //逻辑目录 （非必需，可更改）
+|  └── ****         //其他目录 （非必需，可更改）
+├── app2            //应用2目录 （非必需，可更改）
+├── common          //公共应用目录 （非必需，可更改）
+├── config          //配置目录 （非必需，不可更改）
+|  ├── app.js       //APP配置 （非必需，不可更改）
+|  ├── route.js     //路由配置 （非必需，不可更改）
+|  └── ****         //其他配置 （非必需，可更改）
+├── public          //静态访问目录 （非必需，可更改）
+|  └── static       //css image文件目录 （非必需，可更改）
+├── node_modules    //nodejs模块目录
+├── server.js       //应用入口文件 （必需，可更改）
+└── package.json    //npm package.json
 ```
 
 ### 应用入口
 
-```
+```js
 // server.js
 const {app} = require('iijs');
 
@@ -54,11 +52,11 @@ app.listen(3000, '127.0.0.1', function(err){
 
 ### Hello world !
 
-```
+```js
 // app/controller/index.js
 const {Controller} = require('iijs');
 
-class index extends controller {
+class index extends Controller {
     async index() {
         await this.display(`<div style="font-size:50px;">hello iijs, hello world !</div>`);
     }
