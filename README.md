@@ -193,7 +193,7 @@ const app = {
 
     static_dir: './public', //静态文件目录，相对于应用根目录，为空或false时，关闭静态访问
 
-    koa_body: {} //koa-body参数，默认禁止文件上传
+    koa_body: {} //koa-body配置参数，为false时，关闭koa-body
 }
 
 module.exports = app;
@@ -298,7 +298,7 @@ module.exports = {
 };
 ```
 
-helper.ii为自动加载模块，可以自己实例话使用，具体用法参考noader模块
+helper.ii为自动加载模块，可以自己实例化使用，具体用法参考noader模块
 
 ### 特点
 
