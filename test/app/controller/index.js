@@ -1,7 +1,7 @@
 //const {Controller} = require('iijs');
 const {Controller} = require('../../../iijs');
 
-class index extends Controller {
+class Index extends Controller {
     async index() {
         //let readme = await this.view.load('README.md');
         let readme = await this.view.load('../README.md', true);
@@ -17,4 +17,4 @@ class index extends Controller {
     }
 }
 
-module.exports = index;
+module.exports = Index;
