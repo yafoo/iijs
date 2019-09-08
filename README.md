@@ -259,6 +259,47 @@ module.exports = route;
 // 输出hello iijs, hello world !
 ```
 
+### 全局参数
+除了koa ctx参数外，本框架，添加4个根参数
+
+```js
+ctx.$app //当前请求应用名
+ctx.$controller //当前请求控制器名
+ctx.$action //当前请求方法名
+
+ctx.$ii //应用根自动懒加载器，相对应用根目录，可以自动加载任意的nodejs模块，如果模块是个class类，可以自动实例化，并传入ctx next参数，具体可参考npm noader 模块
+```
+
+事实上应用的控制器方法执行用的就是ctx.$ii
+
+```
+//系统控制器方法执行
+await ctx.$ii[ctx.$app][type][ctx.$controller][ctx.$action]();
+
+//执行list控制器index方法
+ctx.$ii.app.controller.list.index();
+//或者
+const list new ctx.$ii.app.controller.list(ctx, next);
+await list.index();
+
+//获取配置文件
+const cfg_app = ctx.$ii.config.app;
+const cfg_db = ctx.$ii.config.db;
+```
+
+### 系统helper模块
+
+```js
+module.exports = {
+    isFileSync,
+    isDirSync,
+    readFile,
+    ii: require('noader')
+};
+```
+
+helper.ii为自动加载模块，可以自己实例话使用，具体用法参考noader模块
+
 ### 特点
 
 >本MVC框架极为轻量小巧，又自由灵活，使用简单，功能又足够强大，可开发简单的页面展示网站，可以开发pai接口应用，也可支撑复杂的多应用网站。你有什么意见或者好的建议，欢迎交流探讨。
