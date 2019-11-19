@@ -1,6 +1,5 @@
 //const {Controller} = require('iijs');
 const {Controller, helper, Db} = require('../../../iijs');
-const db = new Db();
 
 class Index extends Controller {
     async index() {
@@ -18,8 +17,16 @@ class Index extends Controller {
     }
 
     async mysql() {
-        const article = await db.table('article a').join('cate c', 'c.id=a.cate_id').field('a.title, a.id, a.click, c.cate_title').order('a.id', 'desc').select();
-        this.ctx.body = article;
+        const db = new Db(undefined, this.ctx);
+        const list = await db.table('article a').join('cate c', 'c.id=a.cate_id').field('a.title, a.id, a.click, c.cate_title').order('a.id', 'desc').find();
+        db.release();
+
+        const Arc = require('../model/article');
+        const model_article = new Arc(this.ctx, this.next);
+        const list2 = await model_article.db.select();
+        model_article.db.release();
+
+        this.ctx.body = {list, list2};
     }
 }
 
