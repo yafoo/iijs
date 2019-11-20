@@ -17,16 +17,27 @@ class Index extends Controller {
     }
 
     async mysql() {
-        const db = new Db(undefined, this.ctx);
-        const list = await db.table('article a').join('cate c', 'c.id=a.cate_id').field('a.title, a.id, a.click, c.cate_title').order('a.id', 'desc').find();
-        db.release();
+        const db = new Db(this.ctx);
+        const list = await db.table('article a').prefix('iime_').join('cate c', 'c.id=a.cate_id').field('a.title, a.id, a.click, c.cate_title').where({'a.click': 200}).order('a.id', 'desc').limit(1, 2).select();
 
         const Arc = require('../model/article');
         const model_article = new Arc(this.ctx, this.next);
-        const list2 = await model_article.db.select();
-        model_article.db.release();
+        const list2 = await model_article.db.find();
+        const list3 = await this.ctx.$ii.app.model.article.db.find();
+        const list4 = await this.ctx.$ii.app.model.article.db.page(2, 3).select();
+        const data = {"cate_id":2,"user_id":0,"title":"测试文章","writer":"雨思","source":"me","source_link":"","click":200,"keywords":"测试,文章","description":"这是一篇测试文章","content":"测试文章测试'文章测试文章内容"};
+        const data2 = {"cate_id":2,"user_id":0,"title":"rtrtrt","writer":"雨思","source":"me","source_link":"","click":200,"keywords":"测试,文章","description":"这是一篇测试文章","content":"test'cccccc"};
+        console.log(await model_article.db.table('article').sql().insert(data));
 
-        this.ctx.body = {list, list2};
+        // const data = {"cate_id":2,"user_id":0,"title":"测试文章","writer":"雨思","source":"me","source_link":"","click":200,"keywords":"测试,文章","description":"这是一篇测试文章","content":"测试文章测试文章测试文章内容"};
+        // const data2 = {"cate_id":2,"user_id":0,"title":"测试文章","writer":"雨思","source":"me","source_link":"","click":200,"keywords":"测试,文章","description":"这是一篇测试文章","content":"测试文章测试文'章测试文章内容"};
+        // await model_article.db.startTrans(async () => {
+        //     await model_article.db.insert(data);
+        //     await model_article.db.insert(data2);
+        // });
+        
+
+        this.ctx.body = {list, list2, list3, list4};
     }
 }
 
