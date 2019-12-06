@@ -3,6 +3,7 @@ module.exports = new Proxy({}, {
         if(prop in target || typeof prop == 'symbol' || prop == 'inspect'){
             return target[prop];
         }
-        return require('./lib/' + prop.toLowerCase());
+        const folder = prop == 'utils' ? prop : 'lib';
+        return require('./' + folder + '/' + prop.toLowerCase());
     }
 });
