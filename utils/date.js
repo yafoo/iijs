@@ -7,7 +7,8 @@ function format(fmt, date) {
         "y+": date.getFullYear().toString().slice(2),// 年
         "m+": (date.getMonth() + 1).toString(),     // 月
         "d+": date.getDate().toString(),            // 日
-        "h+": date.getHours().toString(),           // 时
+        "H+": date.getHours().toString(),           // 时
+        "h+": (date.getHours() > 12 ? date.getHours() - 12 : date.getHours()).toString(),// 时
         "i+": date.getMinutes().toString(),         // 分
         "s+": date.getSeconds().toString()          // 秒
     };
@@ -20,4 +21,20 @@ function format(fmt, date) {
     return fmt;
 }
 
-module.exports = {format};
+function before(time) {
+    time -= 0;
+    let difTime = new Date().getTime() / 1000 - time;
+    let { h, m } = { h: parseInt(difTime / 3600), m: parseInt(difTime / 60) };
+    let msg = "";
+    if (h < 1) {
+        msg = `${m}分钟前`;
+    } else if (h >= 1 && h <= 24) {
+        msg = `${h}小时前`;
+    } else if (h > 24) {
+        h = parseInt(h / 24)
+        msg = `${h}天前`;
+    }
+    return msg;
+}
+
+module.exports = {format, before};
