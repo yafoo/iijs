@@ -1,5 +1,5 @@
 //const {Controller} = require('iijs');
-const {Controller, Db} = require('../../../iijs');
+const {Controller, Db, Page} = require('../../../iijs');
 
 class Index extends Controller {
     async index() {
@@ -45,6 +45,11 @@ class Index extends Controller {
         
 
         this.ctx.body = {list, list2, list3, list4};
+    }
+
+    async page() {
+        const page = new Page(this.ctx).init(1500).render();
+        this.ctx.body = page;
     }
 }
 
