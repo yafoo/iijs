@@ -12,7 +12,7 @@ class Index extends Controller {
         await this.fetch();
     }
 
-    async hello() {console.log('action:', this.ctx.url);
+    async hello() {
         // console.log(this.$root);
         // console.log(this.$model);
         // console.log(this.$model.article);
@@ -22,7 +22,23 @@ class Index extends Controller {
         // console.log(this.$config);
         // console.log(this.$config.app);
         // console.log('文章总数：' + await this.$model.article.db.value('count(*)'));
-        await this.display(`<div style="font-size:50px;">hello iijs, hello world !</div>`);
+        let html = '<div style="font-size:50px;">hello iijs, hello world !</div>';
+        const page = new Page(this.ctx).init(200, {pageQuery: 'params', urlIndex: '/hello'}).render();
+        html += page;
+
+        const css = `<style>
+            .page{display:flex;}
+            .page li{list-style:none;margin:5px;}
+            .page li a{display:block;padding:5px 10px;border:1px solid blue;text-decoration:none;color:inherit;}
+            .page li.active a,.page li:hover a{background-color:blue;color:#fff;}
+        </style>`;
+        html += css;
+
+        const page2 = this.$page.cate.init(200).render();
+
+        html += page2;
+        
+        await this.display(html);
     }
 
     async mysql() {
@@ -45,11 +61,6 @@ class Index extends Controller {
         
 
         this.ctx.body = {list, list2, list3, list4};
-    }
-
-    async page() {
-        const page = new Page(this.ctx).init(1500).render();
-        this.ctx.body = page;
     }
 }
 
