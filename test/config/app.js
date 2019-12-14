@@ -14,11 +14,11 @@ const app = {
     view_engine: 'art', //默认模版引擎，内置（ejs, art）
     view_depr: '_', //模版文件名分割符，'/'代表二级目录
     view_ext: '.htm', //模版后缀
-    view_filter: {test: (v)=>'test:'+v}, //模版函数
+    view_filter: {}, //模版函数
 
     static_dir: './public', //静态文件目录，相对于应用根目录，为空或false时，关闭静态访问
 
-    koa_body: {} //koa-body配置参数，为false时，关闭koa-body
+    koa_body: null //koa-body配置参数，为''、null、false时，关闭koa-body
 }
 
 module.exports = app;
