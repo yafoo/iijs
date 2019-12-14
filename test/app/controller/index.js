@@ -12,16 +12,16 @@ class Index extends Controller {
         await this.fetch();
     }
 
-    async hello() {
-        console.log(this.$root);
-        console.log(this.$model);
-        console.log(this.$model.article);
-        console.log(this.$model.article === this.$model.article);
-        console.log(this.$model.article.db === this.$model.article.db);
-        console.log(this.$app);
-        console.log(this.$config);
-        console.log(this.$config.app);
-        console.log('文章总数：' + await this.$model.article.db.value('count(*)'));
+    async hello() {console.log('action:', this.ctx.url);
+        // console.log(this.$root);
+        // console.log(this.$model);
+        // console.log(this.$model.article);
+        // console.log(this.$model.article === this.$model.article);
+        // console.log(this.$model.article.db === this.$model.article.db);
+        // console.log(this.$app);
+        // console.log(this.$config);
+        // console.log(this.$config.app);
+        // console.log('文章总数：' + await this.$model.article.db.value('count(*)'));
         await this.display(`<div style="font-size:50px;">hello iijs, hello world !</div>`);
     }
 
