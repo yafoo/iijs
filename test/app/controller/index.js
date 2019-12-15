@@ -1,5 +1,5 @@
 //const {Controller} = require('iijs');
-const {Controller, Db, Page} = require('../../../iijs');
+const {Controller, Db, Pagination} = require('../../../iijs');
 
 class Index extends Controller {
     async index() {
@@ -23,7 +23,7 @@ class Index extends Controller {
         // console.log(this.$config.app);
         // console.log('文章总数：' + await this.$model.article.db.value('count(*)'));
         let html = '<div style="font-size:50px;">hello iijs, hello world !</div>';
-        const page = new Page(this.ctx).init(200, {pageQuery: 'params', urlIndex: '/hello'}).render();
+        const page = new Pagination(this.ctx).config({pageQuery: 'params', urlIndex: '/hello'}).total(200).render();
         html += page;
 
         const css = `<style>
@@ -34,7 +34,7 @@ class Index extends Controller {
         </style>`;
         html += css;
 
-        const page2 = this.$page.cate.init(200).render();
+        const page2 = this.$pagination.cate.render(200);
 
         html += page2;
         
