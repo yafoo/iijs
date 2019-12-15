@@ -2,11 +2,8 @@
 const {Pagination} = require('../../../iijs');
 
 class Index extends Pagination {
-    config() {
-        this.opts.urlIndex = '/cate';
-        this.opts.pageQuery = 'params';
-        this.opts.pageSize = 10;
-        super.config();
+    config(opts) {
+        super.config({urlIndex: '/hello/', urlPage: '/hello/list_${page}.html', pageQuery: 'params', pageSize: 10, ...opts});
     }
 }
 
