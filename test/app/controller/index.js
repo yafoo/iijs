@@ -8,7 +8,7 @@ class Index extends Controller {
         //readme = helper.md().render(readme);
         readme = readme.replace('</p>', '</p><hr>');
         this.assign('title', 'iijs - 一个简单轻量级Node.js MVC框架');
-        this.assign('readme', readme);
+        this.assign('readme', readme);const db = new Db();
         await this.fetch();
     }
 
