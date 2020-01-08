@@ -1,12 +1,11 @@
-const {Controller, Db} = require('../../../iijs');
-let times = 0
+const {Controller, Cookie} = require('../../../iijs');
 class Cate extends Controller {
     async cate() {
-        if(times < 3){
-            times++;
-            console.log(this.ctx.status);
-            this.ctx.body = 'test';
-        }
+        const cookie = new Cookie(this.ctx, this.next);
+        cookie.set('test', 'value');
+        cookie.set('test2', 'value2', {maxAge: 1000 * 3600});
+        cookie.set('test4', 'value4', {expires: new Date('2020-07-06')});
+        this.display(cookie.all('test'));
     }
 }
 

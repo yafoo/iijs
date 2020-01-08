@@ -59,7 +59,7 @@ const {app, Controller, Model, Db, Pagination, View, Ctx, Context, Logger} = req
 // server.js
 const {app} = require('iijs');
 
-app.listen(3000, '127.0.0.1', function(err){
+app.run(3000, '127.0.0.1', function(err){
     if(!err) console.log('http server is ready on 3000');
 });
 ```
