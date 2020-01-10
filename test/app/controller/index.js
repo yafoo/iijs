@@ -3,9 +3,7 @@ const {Controller, Db, Pagination} = require('../../../iijs');
 
 class Index extends Controller {
     async index() {
-        //let readme = await this.view.load('README.md');
-        let readme = await this.view.load('../README.md', true);
-        //readme = helper.md().render(readme);
+        let readme = await this.view.load('/../README.md', true);
         readme = readme.replace('</p>', '</p><hr>');
         this.assign('title', 'iijs - 一个简单轻量级Node.js MVC框架');
         this.assign('readme', readme);const db = new Db();
@@ -37,8 +35,11 @@ class Index extends Controller {
         const page2 = this.$pagination.cate.render(200);
 
         html += page2;
+
+        this.assign('title', 'page test');
+        this.assign('content', html);
         
-        await this.display(html);
+        await this.fetch('hello');
     }
 
     async mysql() {
