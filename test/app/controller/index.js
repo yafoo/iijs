@@ -2,6 +2,11 @@
 const {Controller, Db, Pagination} = require('../../../iijs');
 
 class Index extends Controller {
+    constructor(...args) {
+        super(...args);
+        this.middleware = ['app/middle1/start', 'app/middle1/end', 'app/middle2/start'];
+    }
+
     async index() {
         let readme = await this.view.load('/../README.md', true);
         readme = readme.replace('</p>', '</p><hr>');
@@ -40,6 +45,9 @@ class Index extends Controller {
         this.assign('content', html);
         
         await this.fetch('hello');
+        console.log('html hello');
+        await this.next();
+        console.log('html world');
     }
 
     async mysql() {

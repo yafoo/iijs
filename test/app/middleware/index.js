@@ -12,6 +12,10 @@ class Index extends Middleware {
         await this.next();
         console.log('业务完成');
     }
+
+    async world() {
+        console.log('hello world!');
+    }
 }
 
 module.exports = Index;
