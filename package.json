@@ -1,6 +1,6 @@
 {
   "name": "iijs",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "description": "A simple and lightweight MVC framework built on nodejs+koa2",
   "main": "iijs.js",
   "scripts": {
