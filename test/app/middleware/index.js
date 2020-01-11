@@ -1,7 +1,7 @@
-//const {Context} = require('iijs');
-const {Context} = require('../../../iijs');
+//const {Middleware} = require('iijs');
+const {Middleware} = require('../../../iijs');
 
-class Index extends Context {
+class Index extends Middleware {
     async index() {
         console.log('验证登录');
         await this.next();
