@@ -11,7 +11,7 @@ class Index extends Controller {
         let readme = await this.view.load('/../README.md', true);
         readme = readme.replace('</p>', '</p><hr>');
         this.assign('title', 'iijs - 一个简单轻量级Node.js MVC框架');
-        this.assign('readme', readme);const db = new Db();
+        this.assign('readme', readme);
         await this.fetch();
     }
 
