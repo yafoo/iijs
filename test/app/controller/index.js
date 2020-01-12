@@ -4,7 +4,7 @@ const {Controller, Db, Pagination} = require('../../../iijs');
 class Index extends Controller {
     constructor(...args) {
         super(...args);
-        this.middleware = ['app/middle1/start', 'app/middle1/end', 'app/middle2/start'];
+        this.middleware = [{middleware: 'app/middle1/start', accept: 'index'}, 'app/middle1/end', 'app/middle2/start'];
     }
 
     async index() {
