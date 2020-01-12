@@ -11,12 +11,12 @@ class Index extends Controller {
         let readme = await this.view.load('/../README.md', true);
         readme = readme.replace('</p>', '</p><hr>');
         this.assign('title', 'iijs - 一个简单轻量级Node.js MVC框架');
-        this.assign('readme', readme);
+        this.assign('readme', readme);console.log(this.$$.db);
         await this.fetch();
     }
 
     async hello() {
-        // console.log(this.$root);
+        // console.log(this.$);
         // console.log(this.$model);
         // console.log(this.$model.article);
         // console.log(this.$model.article === this.$model.article);
@@ -62,8 +62,8 @@ class Index extends Controller {
             this.$model.article.db.page(2, 3).select()
         ]);
         //const list2 = model_article.db.find();
-        //const list3 = this.ctx.$root.app.model.article.db.find();
-        //const list4 = this.ctx.$root.app.model.article.db.page(2, 3).select();
+        //const list3 = this.ctx.$.app.model.article.db.find();
+        //const list4 = this.ctx.$.app.model.article.db.page(2, 3).select();
         //const data = {"cate_id":2,"user_id":0,"title":"测试文章","writer":"雨思","source":"me","source_link":"","click":200,"keywords":"测试,文章","description":"这是一篇测试文章","content":"测试文章测试'文章测试文章内容"};
         //const data2 = {"cate_id":2,"user_id":0,"title":"rtrtrt","writer":"雨思","source":"me","source_link":"","click":200,"keywords":"测试,文章","description":"这是一篇测试文章","content":"test'cccccc"};
         //console.log(await model_article.db.table('article').sql().insert(data));
