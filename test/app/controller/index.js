@@ -26,7 +26,7 @@ class Index extends Controller {
         // console.log(this.$config.app);
         // console.log('文章总数：' + await this.$model.article.db.value('count(*)'));
         let html = '<div style="font-size:50px;">hello iijs, hello world !</div>';
-        const page = new Pagination(this.ctx).config({pageQuery: 'params', urlIndex: '/hello'}).total(200).render();
+        const page = new Pagination(this.ctx).init({pageType: 'params', urlIndex: '/hello', urlPage: '/hello/list_${page}.html'}).total(200).render();
         html += page;
 
         const css = `<style>
