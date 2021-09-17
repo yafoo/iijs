@@ -1,6 +1,6 @@
 {
   "name": "iijs",
-  "version": "3.4.8",
+  "version": "4.4.4",
   "description": "A simple and lightweight MVC framework built on nodejs+koa2",
   "main": "iijs.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yafoo/iijs.git"
+    "url": "git+https://github.com/yafoo/jj.js.git"
   },
   "author": "yafoo",
   "license": "MIT",

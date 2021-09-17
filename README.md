@@ -1,3 +1,12 @@
+# 项目更名为jj.js，并更换仓库地址：
+
+Github：[https://github.com/yafoo/jj.js](https://github.com/yafoo/jj.js "https://github.com/yafoo/jj.js")
+
+Gitee：[https://gitee.com/yafu/jj.js](https://gitee.com/yafu/jj.js "https://gitee.com/yafu/jj.js")
+
+官网：[https://me.i-i.me/jjjs/](https://me.i-i.me/jjjs/ "https://me.i-i.me/jjjs/")
+
+
 # iijs
 
 ![iijs](https://me.i-i.me/static/images/iijs_360.png "iijs")
